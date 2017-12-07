@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="integrationCommonService" extends="default" namespace="/integration/common">
+		<action name="execute" class="integration.web.action" method="executeCommonService" >
+			<result>/pages/blank.jsp</result>
+		</action>
+		<action name="process" class="integration.web.action" method="process">
+			<result name="success">/pages/integration/process.jsp</result>
+		</action>
+	</package>
+	
+	<!--  -->
+	<package name="jsonServerMock" extends="default" namespace="/integration/mock">
+		<action name="response" class="jsonServerMock.web.action" method="response">
+			<result name="success">/pages/integration/responseTest.jsp</result>
+		</action>
+	</package>
+	<!--  -->
+	
+	<package name="integrationGIService" extends="default" namespace="/integration/gi">
+		<action name="execute" class="integration.web.action" method="executeGIService" >
+			<result name="success">/pages/integration/embedded_service.jsp</result>
+		</action>
+	</package>
+	
+</struts>

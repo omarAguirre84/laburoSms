@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+		Aplicación prototype para pruebas de concepto de framework 2.0 OSDE
+		GPI Argentina S.A.
+		Santiago Urrizola
+	-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+				http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+	<description>Conexiones a recursos externos</description>
+		<!-- DataSource Property -->
+		
+	<!-- Ver config data base en memoria -->
+	<bean id="spring.datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="url" value="jdbc:hsqldb:${database.dir}/temp/test-db-prueba-fwk" />
+		<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
+	</bean>
+	
+		<!-- ********************** -->
+	<!-- CONFIGURACION BASE DE HIBERNATE -->
+	<!-- ********************** -->
+	
+	<!-- SessionFactory de Hiberante utilizado por los diferentes DAOs-->
+	<bean id="spring.hibernate.session.factory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="spring.datasource" />
+		<property name="hibernateProperties" ref="spring.hibernate.properties"/>
+		<property name="mappingLocations">
+			<list>
+				<value>classpath*:ar/com/osde/integracionsaludsoft/entities/*.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Propiedades de configuracion de hibernate para testing de BOs -->
+	<bean id="spring.hibernate.properties"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="properties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+				<!-- COMENTAR ESTA PROPIEDAD SI SE VA A CONECTAR EN UNA BASE DE DATOS 
+					REAL -->
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.show_sql">true</prop>
+<!-- 				<prop key="hibernate.connection.release_mode">on_close</prop> -->
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+				<prop key="hibernate.cache.provider_class">net.sf.ehcache.hibernate.EhCacheProvider</prop>
+				<prop key="hibernate.jdbc.fetch_size">100</prop>
+				<prop key="hibernate.jdbc.use_streams_for_binary">true</prop>
+				<prop key="hibernate.current_session_context_class">thread</prop>
+			</props>
+		</property>
+	</bean>
+	
+</beans>

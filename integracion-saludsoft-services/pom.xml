@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>integracion-saludsoft</artifactId>
+		<groupId>ar.com.osde</groupId>
+		<version>1.0.2-SNAPSHOT</version>
+	</parent>
+	<artifactId>integracion-saludsoft-services</artifactId>
+	<name>integracion-saludsoft-services</name>
+	<url>http://maven.apache.org</url>
+	<dependencies>
+		<!-- Dependencias del proyecto -->
+		<dependency>
+			<groupId>ar.com.osde</groupId>
+			<artifactId>integracion-saludsoft-entities</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ar.com.osde.framework</groupId>
+			<artifactId>osde-framework-services</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ar.com.osde.framework</groupId>
+			<artifactId>osde-framework-persistence</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-core</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>javax.jws</groupId>
+			<artifactId>jsr181-api</artifactId>
+			<version>1.0-MR1</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.0</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+</project>

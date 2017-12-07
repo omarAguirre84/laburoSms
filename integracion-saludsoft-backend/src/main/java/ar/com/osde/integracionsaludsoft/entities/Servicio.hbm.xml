@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="ar.com.osde.integracionsaludsoft.entities">
+	<typedef name="TipoInvocacionType" class="org.hibernate.type.EnumType">
+		<param name="enumClass">ar.com.osde.integracionsaludsoft.entities.TipoInvocacion</param> 
+		<param name="type">12</param> 
+	</typedef>
+
+	<typedef name="ParametroType" class="org.hibernate.type.EnumType">
+		<param name="enumClass">ar.com.osde.integracionsaludsoft.entities.Parametro</param> 
+		<param name="type">12</param> 
+	</typedef>
+	
+	<class name="Servicio" table="SERVICIO" mutable="true">
+		<cache usage="read-write" />
+		<id column="ID" name="id" type="long">
+			<generator class="identity" />
+		</id>
+		<property column="NOMBRE" length="100" name="nombre" type="string" not-null="true" />
+		<property column="CODIGO" length="3" name="codigo" type="string" not-null="true" unique="true" />	
+		<property column="URL_SERVICIO" length="255" name="urlServicio" type="string" not-null="true" />
+		<property column="URL_GESTION_INTERNA" length="255" name="urlGestionInterna" type="string" not-null="false" />
+		<property column="URL_INFO_ADICIONAL" length="255" name="urlInfoAdicional" type="string" not-null="false" />
+		<property column="CREATED_BY" length="100" name="createdBy" type="string" not-null="true" />
+ 		<property column="DATE_CREATED" name="dateCreated" type="date" not-null="true" />
+		<property column="UPDATED_BY" length="100" name="updatedBy" type="string" not-null="true" />	
+		<property column="LAST_UPDATED" name="lastUpdated" type="date" not-null="true" />
+		<property column="TIPO_INVOCACION" name="tipoInvocacion" type="TipoInvocacionType" not-null="true" />
+		<property column="REGISTRA_ACTIVIDAD" name="registraActividad" type="boolean" not-null="true" />
+		<set name="parametros" table="SERVICIO_PARAMETRO" lazy="false" cascade="none">
+			  <key column="SERVICIO_ID" not-null="true"/>
+			  <element column="PARAMETRO_ID" type="ParametroType"/>
+		</set>
+	</class>
+</hibernate-mapping>

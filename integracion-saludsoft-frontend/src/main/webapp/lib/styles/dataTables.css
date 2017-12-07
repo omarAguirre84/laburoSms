@@ -1,0 +1,308 @@
+
+/*
+ * Table
+ */
+table.dataTable {
+	margin: 0 auto;
+	clear: both;
+	width: 100%;
+}
+
+table.dataTable thead th {
+	padding: 0px 00px 0px 10px;
+	font-weight: bold;
+	cursor: pointer;
+	*cursor: hand;
+}
+
+table.dataTable tfoot th {
+	padding: 3px 18px 3px 10px;
+	font-weight: bold;
+}
+
+table.dataTable caption,th { text-align:left !important; }
+
+table.dataTable td {
+	padding: 2px 10px;
+}
+
+table.dataTable td.dataTables_empty {
+	text-align: left;
+	padding-left: 5px;
+}
+
+table.dataTable td.center,
+table.dataTable th.center {
+	text-align: center;
+}
+
+table.dataTable td.left,
+table.dataTable th.left {
+	text-align: left;
+}
+
+table.dataTable td.right,
+table.dataTable th.right {
+	text-align: right;
+}
+
+table.dataTable tr.odd { background-color: #F2F4FF; }
+table.dataTable tr.even { background-color: white; }
+
+table.dataTable tr.odd td.sorting_1 { background-color: #F2F4FF; }
+table.dataTable tr.odd td.sorting_2 { background-color: #F2F4FF; }
+table.dataTable tr.odd td.sorting_3 { background-color: #F2F4FF; }
+table.dataTable tr.even td.sorting_1 { background-color: white; }
+table.dataTable tr.even td.sorting_2 { background-color: white; }
+table.dataTable tr.even td.sorting_3 { background-color: white; }
+
+
+/*
+ * Table wrapper
+ */
+.dataTables_wrapper {
+	position: relative;
+	clear: both;
+	*zoom: 1;
+	width: 100%;
+}
+
+.dataTables_wrapper .dataTables_paginate span a {
+	border: none;
+	margin-left: 0;
+}
+
+.dataTables_wrapper .dataTables_paginate > a {
+	height: 20px;
+	margin-top: 2px;
+}
+
+.dataTables_wrapper .dataTables_info {
+	color: #576A6F;
+	font-weight: bold;
+	padding-top: 8px;
+	margin-bottom: 8px;
+	width: 33% !important;
+}
+
+/*
+ * Page length menu
+ */
+.dataTables_length {
+	float: left;
+}
+
+
+/*
+ * Filter
+ */
+.dataTables_filter {
+	float: right;
+	text-align: right;
+	padding-bottom: 3px;
+}
+
+
+/*
+ * Table information
+ */
+.dataTables_info {
+	clear: both;
+	float: left;
+	padding-top: 3px;
+}
+
+
+/*
+ * Pagination
+ */
+.dataTables_paginate {
+	float: right;
+	text-align: right;
+	padding-top: 4px;
+}
+
+.dataTables_paginate a {
+/* 	font-size: 11px !important; */
+}
+
+.paging_full_numbers a.paginate_button {
+	background-color: #FFF;
+}
+
+.dataTables_paginate span {
+	display: inline !important;
+}
+
+.dataTables_paginate span a {
+	border: none;
+	margin-left: 0;
+}
+
+/* Two button pagination - previous / next */
+.paginate_disabled_previous,
+.paginate_enabled_previous,
+.paginate_disabled_next,
+.paginate_enabled_next {
+	height: 19px;
+	float: left;
+	cursor: pointer;
+	*cursor: hand;
+	color: #111 !important;
+}
+.paginate_disabled_previous:hover,
+.paginate_enabled_previous:hover,
+.paginate_disabled_next:hover,
+.paginate_enabled_next:hover {
+	text-decoration: none !important;
+}
+.paginate_disabled_previous:active,
+.paginate_enabled_previous:active,
+.paginate_disabled_next:active,
+.paginate_enabled_next:active {
+	outline: none;
+}
+
+.paginate_disabled_previous,
+.paginate_disabled_next {
+	color: #666 !important;
+}
+.paginate_disabled_previous,
+.paginate_enabled_previous {
+	padding-left: 23px;
+}
+.paginate_disabled_next,
+.paginate_enabled_next {
+	padding-right: 23px;
+	margin-left: 10px;
+}
+
+.paginate_enabled_previous { background: url('../../images/dataTables/back_enabled.png') no-repeat top left; }
+.paginate_enabled_previous:hover { background: url('../../images/dataTables/back_enabled_hover.png') no-repeat top left; }
+.paginate_disabled_previous { background: url('../../images/dataTables/back_disabled.png') no-repeat top left; }
+
+.paginate_enabled_next { background: url('../../images/dataTables/forward_enabled.png') no-repeat top right; }
+.paginate_enabled_next:hover { background: url('../../images/dataTables/forward_enabled_hover.png') no-repeat top right; }
+.paginate_disabled_next { background: url('../../images/dataTables/forward_disabled.png') no-repeat top right; }
+
+/* Full number pagination */
+.paging_full_numbers {
+	height: 22px;
+	line-height: 22px;
+}
+.paging_full_numbers a:active {
+	outline: none
+}
+.paging_full_numbers a:hover {
+	text-decoration: none;
+}
+
+.paging_full_numbers a.paginate_button,
+.paging_full_numbers a.paginate_active {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding: 3px 5px;
+	margin: 0 3px;
+	cursor: pointer;
+	*cursor: hand;
+	color: #333 !important;
+	font-size: 11px;
+}
+
+
+.paging_full_numbers a.paginate_button {
+	border: 0px;
+	color: #576A6F !important;
+	text-decoration: none;
+	background-color: transparent !important;
+	font-weight: normal;
+}
+
+.paging_full_numbers a.paginate_active {
+	border: 0px;
+	color: #576A6F !important;
+	text-decoration: none;
+	background-color: transparent !important;
+	font-weight: bold;
+}
+
+.paging_full_numbers a.paginate_button:hover {
+	text-decoration: none !important;
+}
+
+/*
+ * Processing indicator
+ */
+.dataTables_processing {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 250px;
+	height: 30px;
+	margin-left: -125px;
+	margin-top: -15px;
+	padding: 14px 0 2px 0;
+	border: 1px solid #ddd;
+	text-align: center;
+	color: #999;
+	font-size: 14px;
+	background-color: white;
+}
+
+
+/*
+ * Sorting
+ */
+.sorting { background: url('../../images/dataTables/sort_both.png') no-repeat center right; }
+.sorting_asc { background: url('../../images/dataTables/sort_asc.png') no-repeat center right; }
+.sorting_desc { background: url('../../images/dataTables/sort_desc.png') no-repeat center right; }
+
+.sorting_asc_disabled { background: url('../../images/dataTables/sort_asc_disabled.png') no-repeat center right; }
+.sorting_desc_disabled { background: url('../../images/dataTables/sort_desc_disabled.png') no-repeat center right; }
+ 
+table.dataTable th:active {
+	outline: none;
+}
+
+
+/*
+ * Scrolling
+ */
+.dataTables_scroll {
+	clear: both;
+}
+
+.dataTables_scrollBody {
+	*margin-top: -1px;
+}
+
+.dataTables_bloque {
+	background: #F5F5F5;
+	padding-left: 6px;
+	padding-bottom: 20px;
+	padding-top: 5px;
+	padding-right: 6px;
+	border: solid 1px #CCC;	
+}
+
+.dataTables_bloque_detail {
+	background-color: #EEF;
+	padding-left: 10px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	padding-right: 10px;
+	border-bottom: solid 1px #CCC;	
+	border-left: solid 1px #CCC;	
+	border-right: solid 1px #CCC;	
+	border-top: 0px !important;
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+	margin-bottom: 5px;
+	margin-left: 10px;
+}
+
+.dataTables_detail {
+	background-color: white;
+	border: 0;
+}

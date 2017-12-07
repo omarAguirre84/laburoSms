@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!-- Aplicación prototype para pruebas de concepto de framework 2.0 OSDE -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+				http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+				http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+	<description>Contexto para la definicion de actions de struts2</description>
+
+	<!-- Integracion -->
+	<bean id="integration.handler" class="ar.com.osde.integracionsaludsoft.handler.impl.IntegrationHandlerImpl" scope="prototype">
+		<property name="gateway" ref="integration.common.service.gateway"></property>
+		<property name="requestHandler" ref="integration.gi.request.handler"></property>
+	</bean>
+	
+	<bean id="integration.common.service.gateway" class="ar.com.osde.framework.integration.gateway.rest.AdvanceRestIntegrationGateWay">
+		<constructor-arg ref="integration.common.event.handler"></constructor-arg>
+	</bean> 
+	
+	<bean id="integration.common.event.handler" class="ar.com.osde.integracionsaludsoft.handler.impl.SaludsoftIntegrationEventHandler">
+		<property name="integrationService" ref="integration.service"/>
+		<property name="servicioService" ref="servicio.service"/>
+		<property name="urlHost" value="${integration.url.host}"/>
+		<property name="urlContext" value="${integration.url.context}"/>
+	</bean>
+	
+	<bean id="integration.gi.request.handler" class="ar.com.osde.integracionsaludsoft.handler.impl.SaludsoftIntegrationRequestHandler">
+		<property name="integrationService" ref="integration.service"/>
+	</bean>
+
+	<!-- Actions -->
+	<bean id="exception.handler.action" class="ar.com.osde.integracionsaludsoft.web.action.exception.ExceptionHandlerAction" scope="prototype"/>
+	
+	<bean id="integration.web.action" class="ar.com.osde.integracionsaludsoft.web.action.integration.IntegrationAction" scope="prototype">
+		<property name="integrationHandler" ref="integration.handler"></property>
+		<property name="integrationService" ref="integration.service"></property>
+	</bean>
+	
+	<bean id="jsonServerMock.web.action" class="ar.com.osde.integracionsaludsoft.web.action.jsonServerMock.JsonServerMock" scope="prototype">
+	</bean>
+
+	<bean id="servicio.web.action" class="ar.com.osde.integracionsaludsoft.web.action.ServicioAction" scope="prototype">
+		<property name="servicioService" ref="servicio.service"></property>
+		<property name="parametroService" ref="parametro.service"></property>
+	</bean>
+	
+</beans>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mappings PUBLIC "-//DOZER//DTD MAPPINGS//EN"
+   "http://dozer.sourceforge.net/dtd/dozerbeanmapping.dtd">
+<mappings>
+	<mapping>
+		<class-a>ar.com.osde.framework.services.crud.PageDTO</class-a>
+		<class-b>ar.com.osde.framework.persistence.dao.filter.Page</class-b>
+	</mapping>
+</mappings>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!-- Aplicación prototype para pruebas de concepto de framework 2.0 OSDE -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:cxf="http://cxf.apache.org/core"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+				http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+				http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+        		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+        		
+	<description>Contexto para la definicion de Web Services</description>
+	
+	<!-- Load CXF modules from cxf.jar -->
+    <import resource="classpath:META-INF/cxf/cxf.xml" />
+    <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+    
+    <!-- Webservices del CRUD Genérico -->
+	<import resource="classpath*:ar/com/osde/framework/crud/backend/spring/remote/osde-framework-crud-backend-*-spring.xml"/>
+	
+	<cxf:bus>
+	 	<cxf:features>
+		<!--  <cxf:logging/>  -->
+	 	</cxf:features>
+	</cxf:bus>
+
+	<!-- Endpoint con annotations de JAX-WS  -->
+	
+	 <jaxws:endpoint id="IntegrationService" address="/IntegrationService">
+		<jaxws:implementor>
+			<bean id="integration.web.service" class="ar.com.osde.integracionsaludsoft.services.impl.IntegrationServiceImpl">
+				<property name="resolvers">
+					<util:map
+						key-type="ar.com.osde.integracionsaludsoft.backend.integration.handler.common.UrlRequestType"
+						value-type="ar.com.osde.integracionsaludsoft.bo.TargetUrlResolverBO">
+						<entry>
+							<key>
+								<value>SERVICIO</value>
+							</key>
+							<ref bean="servicio.url.resolver.tx.bo"/>
+						</entry>
+						<entry>
+							<key>
+								<value>GESTION_INTERNA</value>
+							</key>
+							<ref bean="gestion.interna.url.resolver.tx.bo"/>
+						</entry>
+						<entry>
+							<key>
+								<value>INFO_ADICIONAL</value>
+							</key>
+							<ref bean="info.adicional.url.resolver.tx.bo"/>
+						</entry>
+					</util:map>
+				</property>
+			</bean>
+		</jaxws:implementor>
+	</jaxws:endpoint>
+	
+	<jaxws:endpoint id="ServicioService" address="/ServicioService">
+		<jaxws:implementor>
+			<bean id="servicio.web.service" class="ar.com.osde.integracionsaludsoft.services.impl.ServicioServiceImpl">
+				<property name="servicioBO" ref="servicio.tx.bo" />
+				<property name="assembler" ref="osde.framework.services.assembler"></property>
+			</bean>
+		</jaxws:implementor>
+		<jaxws:inInterceptors>
+			<bean class="ar.com.osde.framework.services.headerinfo.interceptor.SoapHeaderInfoInInterceptor" />
+		</jaxws:inInterceptors>
+	</jaxws:endpoint>
+	
+	<jaxws:endpoint id="ParametroService" address="/ParametroService">
+		<jaxws:implementor>
+			<bean id="parametro.web.service" class="ar.com.osde.integracionsaludsoft.services.impl.ParametroServiceImpl">
+				<property name="parametroBO" ref="parametro.tx.bo" />
+				<property name="assembler" ref="osde.framework.services.assembler"></property>
+			</bean>
+		</jaxws:implementor>
+	</jaxws:endpoint>
+</beans>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mappings PUBLIC "-//DOZER//DTD MAPPINGS//EN"
+   "http://dozer.sourceforge.net/dtd/dozerbeanmapping.dtd">
+<mappings>
+	<mapping>
+		<class-a>org.apache.commons.httpclient.NameValuePair</class-a>
+		<class-b>org.apache.http.NameValuePair</class-b>
+	</mapping>
+
+</mappings>
+
+

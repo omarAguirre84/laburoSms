@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!-- Aplicación prototype para pruebas de concepto de framework 2.0 OSDE -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+				http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+				http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+	<description>Contexto para la definicion de webservices</description>
+	
+	<!-- USO Recomendado por arquitectura. Con annotation y Fwk de Servicios con CXF. -->		
+	
+	<bean id="integration.service" class="ar.com.osde.framework.spring.services.ServiceFactoryBean">
+		<property name="name" value="IntegrationService"/>
+		<property name="urlHost" value="${osde.framework.webservices.urlHost}"/>
+		<property name="urlContext" value="/integracion-saludsoft-backend/webservices/IntegrationService"/>
+		<property name="interfaceService" value="ar.com.osde.integracionsaludsoft.services.IntegrationService"/>
+	</bean>
+	
+	<bean id="servicio.service" class="ar.com.osde.framework.spring.services.ServiceFactoryBean">
+		<property name="name" value="ServicioService"/>
+		<property name="urlHost" value="${osde.framework.webservices.urlHost}"/>
+		<property name="urlContext" value="/integracion-saludsoft-backend/webservices/ServicioService"/>
+		<property name="interfaceService" value="ar.com.osde.integracionsaludsoft.services.ServicioService"/>
+	</bean>
+	
+	<bean id="parametro.service" class="ar.com.osde.framework.spring.services.ServiceFactoryBean">
+		<property name="name" value="ParametroService"/>
+		<property name="urlHost" value="${osde.framework.webservices.urlHost}"/>
+		<property name="urlContext" value="/integracion-saludsoft-backend/webservices/ParametroService"/>
+		<property name="interfaceService" value="ar.com.osde.integracionsaludsoft.services.ParametroService"/>
+	</bean>
+	
+</beans>

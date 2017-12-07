@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+	
+	<description>Definiciones de aspectos generales de la aplicacion</description>
+ 
+	<bean id="logging.aspect.bean" class="ar.com.osde.integracionsaludsoft.utils.LoggingAspect"/>
+	
+	<bean id="exception.handler.aspect.bean" class="ar.com.osde.integracionsaludsoft.utils.RuntimeExceptionHandlerAspect"/>
+	
+	<aop:config>
+		<aop:aspect id="loggingTiming" ref="logging.aspect.bean">
+			<aop:pointcut id="loggingTimingPointcut" expression="bean(*.bo)"/>
+			<aop:around pointcut-ref="loggingTimingPointcut" method="timing"/>
+		</aop:aspect>
+	</aop:config>
+
+	<aop:config>
+		<aop:pointcut id="serviceExceptionPointCut" expression="bean(*.web.service)"/>
+		
+ 		<aop:aspect id="loggingAspect" ref="logging.aspect.bean">
+ 			<aop:around pointcut-ref="serviceExceptionPointCut" method="profile"/>
+ 		</aop:aspect> 
+		
+		<aop:aspect id="serviceExceptionLoggingAspect" ref="logging.aspect.bean">
+			<aop:after-throwing pointcut-ref="serviceExceptionPointCut" method="logServiceExceptions" throwing="ex" />
+		</aop:aspect>
+		
+		<aop:aspect id="runtimeExceptionHandlerAspect" ref="exception.handler.aspect.bean">
+			<aop:after-throwing pointcut-ref="serviceExceptionPointCut" method="handleException" throwing="ex" />
+		</aop:aspect>
+	</aop:config>
+	
+</beans>

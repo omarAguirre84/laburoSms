@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="servicios" extends="json-error-handler-default" namespace="/servicios">
+		<action name="list" class="servicio.web.action" method="list" >
+			<result type="json">
+				<param name="root">servicios</param>
+			</result> 
+		</action>
+		<action name="listByFilter" class="servicio.web.action" method="listByFilter" >
+			<result type="json">
+				<param name="root">servicios</param>
+			</result>
+		</action>
+		<action name="show" class="servicio.web.action" method="show" >
+			<result type="json">
+				<param name="root">servicio</param>
+			</result> 
+		</action>
+		<action name="save" class="servicio.web.action" method="save" >
+			<result type="json">
+				<param name="root">servicio</param>
+			</result>
+		</action>
+		<action name="update" class="servicio.web.action" method="update" >
+			<result type="json">
+				<param name="root">servicio</param>
+			</result> 
+		</action>
+		<action name="delete" class="servicio.web.action" method="delete" >
+			<result type="json">
+				<param name="root">mapa</param>
+			</result>
+		</action>
+	</package>
+	
+	<package name="servicios-views" extends="default" namespace="/servicios/views">
+		<action name="index" class="servicio.web.action" method="index">
+			<result name="success">/pages/views/index.jsp</result> 
+		</action>
+		<action name="add" class="servicio.web.action" method="add">
+			<result name="success">/pages/views/item.jsp</result> 
+		</action>
+		<action name="edit" class="servicio.web.action" method="edit">
+			<result name="success">/pages/views/item.jsp</result> 
+		</action>
+		<action name="view" class="servicio.web.action" method="view">
+			<result name="success">/pages/views/view.jsp</result> 
+		</action>
+	</package>
+</struts>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<!-- Template de configuracion general para struts2 -->
+<struts>
+
+	<!-- Propiedades globales para la configuracion de struts2 -->
+	<constant name="struts.i18n.reload" value="false" />
+	<constant name="struts.i18n.encoding" value="ISO-8859-1" />
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.objectFactory" value="spring" />
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<constant name="struts.custom.i18n.resources" value="messages,errors" />
+	<constant name="struts.action.extension" value="do" />
+	<constant name="struts.serve.static" value="true" />
+	<constant name="struts.serve.static.browserCache" value="false" />
+	<constant name="struts.ui.theme" value="osdeTheme" />
+	<!-- <constant name="struts.action.excludePattern" value="*.jsp*"/> -->
+
+	<include file="struts/integration.xml" />
+	<include file="struts/servicio.xml" />
+
+	<package name="default" extends="struts-default">
+
+		<result-types>
+			<result-type name="json" class="org.apache.struts2.json.JSONResult" />
+		</result-types>
+
+		<interceptors>
+			<interceptor name="exception" class="com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor"/>
+
+			<interceptor name="multiSelectInterceptor" class="ar.com.osde.framework.web.common.action.crud.interceptors.MultiselectInterceptor"></interceptor>
+
+			<interceptor-stack name="crudStack">
+				<interceptor-ref name="checkbox" />
+				<interceptor-ref name="params" />
+				<interceptor-ref name="staticParams" />
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="exception">
+					<param name="logEnabled">true</param>
+					<param name="logLevel">error</param>
+					<param name="logCategory">ar.com.osde.integracionsaludsoft.web.exceptionmapping</param>
+				</interceptor-ref>
+			</interceptor-stack>
+
+			<interceptor name="json" class="org.apache.struts2.json.JSONInterceptor" />
+		</interceptors>
+
+		<default-action-ref name="home" />
+
+		<global-results>
+			<result name="NullPointer">/pages/template/includes/mensajes/error.jsp?decorator=error</result>
+			<result name="Exception">/pages/template/includes/mensajes/error.jsp?decorator=error</result>
+		</global-results>
+
+		<global-exception-mappings>
+			<exception-mapping exception="java.lang.NullPointerException" result="NullPointer" />
+			<exception-mapping exception="java.lang.Exception" result="Exception" />
+		</global-exception-mappings>
+
+		<action name="home">
+			<result>index.jsp</result>
+		</action>
+
+		<!-- action generico para errores -->
+		<action name="error" class="error.web.action">
+			<!-- interceptor-ref name="retrieveStack"/ -->
+			<result>/pages/template/includes/mensajes/errorPage.jsp</result>
+		</action>
+
+		<action name="changeLayout" class="layout.web.action">
+			<interceptor-ref name="createSession" />
+			<interceptor-ref name="defaultStack" />
+			<result type="redirectAction">home</result>
+		</action>
+
+		<action name="dialogAction" class="demo.dialog.web.action">
+			<!-- interceptor-ref name="storeStack"/ -->
+			<result name="error_page">/pages/template/errorPage.jsp</result>
+			<result name="error_dialog">/pages/template/includes/mensajes/error.jsp?decorator=none
+			</result>
+		</action>
+
+	</package>
+
+	<package name="json-error-handler-default" extends="json-default">
+		<result-types>
+			<result-type name="json" class="org.apache.struts2.json.JSONResult" />
+		</result-types>
+	
+		<interceptors>
+			<interceptor name="exception" class="com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor"/>
+			<interceptor-stack name="defaultStack">
+				<interceptor-ref name="exception">
+					<param name="logEnabled">true</param>
+					<param name="logLevel">error</param>
+					<param name="logCategory">ar.com.osde.integracionsaludsoft.web.exceptionmapping</param>
+				</interceptor-ref>
+            	<interceptor-ref name="basicStack"/>
+			</interceptor-stack>
+		</interceptors>
+		
+		<default-interceptor-ref name="defaultStack"/>
+	
+		<global-results>
+			<result name="json-validation-exception" type="chain"> 
+                 <param name="actionName">jsonValidationExceptionAction</param>
+                 <param name="namespace">/</param> 
+             </result> 
+			<result name="json-common-exception" type="chain"> 
+                 <param name="actionName">jsonCommonExceptionAction</param>
+                 <param name="namespace">/</param> 
+             </result> 
+			<result name="json-exception" type="chain">
+				<param name="actionName">jsonExceptionAction</param>
+				<param name="namespace">/</param>
+			</result>
+		</global-results>
+	
+		<global-exception-mappings>
+			<exception-mapping exception="ar.com.osde.framework.services.ServiceException" result="json-common-exception" />
+			<exception-mapping exception="ar.com.osde.integracionsaludsoft.exception.ServiceValidationException" result="json-validation-exception" />
+			<exception-mapping exception="java.lang.Exception" result="json-exception" />
+		</global-exception-mappings>
+	
+		<action name="jsonExceptionAction" class="exception.handler.action" method="handleJsonException">
+			<interceptor-ref name="chainStack">
+        		<param name="chain.includes">exception</param>
+    		</interceptor-ref>
+			<result name="error" type="httpheader">
+				 <param name="contentType">text/plain</param>
+			</result>
+		</action>
+
+		<action name="jsonCommonExceptionAction" class="exception.handler.action" method="handleJsonCommonException">
+			<interceptor-ref name="chainStack">
+        		<param name="chain.includes">exception</param>
+    		</interceptor-ref>
+			<result name="error" type="httpheader">
+				 <param name="contentType">text/plain</param>
+			</result>
+		</action>
+
+		<action name="jsonValidationExceptionAction" class="exception.handler.action" method="handleJsonValidationException">
+			<interceptor-ref name="chainStack">
+        		<param name="chain.includes">exception</param>
+    		</interceptor-ref>
+			<result name="error" type="httpheader">
+				 <param name="contentType">text/plain</param>
+			</result>
+		</action>
+	</package>	
+
+</struts>
